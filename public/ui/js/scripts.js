@@ -1,0 +1,198 @@
+$(function() {
+    
+    //INIT THE CLIENT
+    var list = $('#ajax-list'); 
+    var criteria = $('form.criteria');
+    var meta = $('#browser .meta');
+    var keyup_timer = false;
+    var section = window.location.pathname; 
+    
+    meta.sort = meta.find('.sort select');
+    meta.dir = meta.find('.sort a.order'); 
+    list.css('min-height', document.documentElement.clientHeight - 240);
+    
+    //set the section
+    console.log(window.location.pathname);
+    console.log(section);
+    window.section = section;
+    
+    var old_q = false; //init old_query
+    var limit = 5;
+    var page = 0;
+    var pages = 0;
+    
+    var Browser = {
+        table: false,
+        keyword: false,
+        q: false,
+        parent: list.parent().get(0),
+        count:0,
+        onRow: {
+            '/admin/apps': function (row) { 
+                var ret = '<tr id="row-'+row.id+'" rel="'+row.id+'"><td><h4>'+row.name+'</h4></td></tr>';
+                return ret;
+            }
+        },
+        update: function(options) {
+          //  alert(section);
+            var self = Browser;
+            self.keyword = criteria.find('input[name=keyword]').val();
+            self.subject = criteria.find('input[name=subject]').val() || 'apps';
+            self.q = criteria.serialize(); 
+            
+            if(old_q == self.q && !options) {
+            	return(false);
+            }
+            else {
+            	old_q = self.q;
+            }
+            	
+            $('#browser .create.button.openbox').attr('rel',section+'/'+self.subject+'/create');
+            $('#browser .import.button.openbox').attr('rel',section+'/'+self.subject+'/import');
+            
+            page = options.page?parseInt(options.page):0;
+            if(page < 0) page = 0;
+            
+            var sort = meta.sort.val();
+            var dir = meta.dir.hasClass('desc')?'-1':'1';
+            
+            var offset = page*limit;
+            
+            
+            $.getJSON(section+'/'+self.subject+'/search',self.q+'&offset='+offset+'&limit='+limit+'&sort='+sort+'&dir='+dir, function (response) { 
+                var html = '';
+                self.count = response.results.length;//response.count;
+                self.table = $('<table class="list"></table>');
+                list.empty().append(self.table);
+                console.log(response); 
+                $.each(response.results, function(i,row) {
+                    html += self.onRow[section+"/"+self.subject].call(self,row);
+                });
+                self.table.html(html); 
+                // Pagination
+                var pagination = new Array();
+                pages = Math.floor(self.count / limit) + 1;
+                
+                for(i = 0; i < response.count / limit; i++) {
+                	if(Math.abs(page - i) < 6 || i < 1 || i > pages-2)
+                	pagination.push('<a rel="'+i+'"'+(page==i?' class="selected"':'')+'>'+(i+1)+'</a>');
+                }
+                
+                meta.find('.pagination').html(pagination.join(' | '));
+                meta.find('.found').html('page'+' <b>'+(page+1)+'</b> / '+pages+'');
+            });
+        }
+    }
+    criteria.change(Browser.update); 
+    Browser.update(true);
+    
+    
+	// Object handles items (right panel)
+	var ObjectPane = {
+		url: false,
+		load: function(url, callback) {
+			this.url = url;
+			
+			$('#object').show().find('.ajax').hide().load(url, function() {
+				$(this).show();
+				
+				if(object_tab && $(this).find('.tabs li[rel='+object_tab+']').click().length == 1) {}
+				else
+					$(this).find('.tabs li:first').click();
+				
+			//	loadFeed();
+				
+				$(this).find('.attach').each(function() {
+		//			createUploader(this);
+				});
+				
+			//	$(this).find('.tags:empty').html('<p>'+loc('add_tags')+'</p>');
+				
+				if(callback)
+					callback.call(this);
+			});
+		},
+		hide: function() {
+		},
+		reload: function() {
+			this.load(this.url);
+		}
+	}
+	window.ObjectPane = ObjectPane;
+	var object_tab = $.cookie('object_tab_'+section);
+	$('#object').delegate('.tabs li', 'click', function() {
+		if($(this).attr('rel')) {
+			object_tab = $(this).attr('rel');
+			$.cookie('object_tab_'+section, object_tab);
+		}
+	});
+    
+    list.delegate('tr', 'click', function() {
+    	if($(this).attr('rel')) {
+    	    var subject = criteria.find('input[name=subject]').val() || 'apps';
+    		window.location.hash = 'id:'+$(this).attr('rel');
+    		url_id = $(this).attr('rel');
+    		
+    		$(this).addClass('selected').siblings().removeClass('selected');
+    		ObjectPane.load(section+'/'+subject+'/show/'+$(this).attr('rel'));
+    	}
+    });
+    $('.tabs li').live('click', function() {
+    	if($(this).attr('rel')) {
+    		$(this).siblings().removeClass('selected');
+    		$(this).addClass('selected');
+    		
+    		$('.tab').hide();
+    		$($(this).attr('rel')).show();
+    	}
+    });
+    
+    $('#sidebar li').live('click', function() { 
+    	$(this).addClass('selected').siblings().removeClass('selected');
+    	$(this).parents('ul').next('input').val($(this).attr('rel')).change().submit();
+    });
+    
+    // Openbox
+	$('#container .openbox, a.openbox').live('click', function() {
+		var self = $(this);
+		self.addClass('hover');
+		
+		var box = $('<div class="openbox loading"><span class="arrow"></span><div class="ajax"></div><a class="x"></a></div>');
+		$(document.body).append(box);
+		
+		if($(this).hasClass('openbox-wide')) box.addClass('wide');
+		
+		if($(this).attr('rel'))
+			box.find('div.ajax').load($(this).attr('rel'), function() {
+				box.removeClass('loading');
+				box.find('input[type=text], textarea').eq(0).focus();
+			});
+			
+		
+		var offset = $(this).offset();
+		offset.left += $(this).get(0).offsetWidth / 2;
+		offset.top += $(this).get(0).offsetHeight;
+		
+		if(offset.left + 40 > document.body.clientWidth)
+			box.addClass('tight');
+		
+		if(offset.left < 280)
+			box.addClass('left');
+		
+		box.css(offset).fadeIn(250);
+		
+		var hide = function(e) {
+			if(e.type == 'close' || $(e.target).is('a.x') || (e.target != box.get(0) && $(e.target).parents('div.openbox').length == 0)) {
+				box.fadeOut(100, function() {
+					$(this).remove();
+				});
+				self.removeClass('hover');
+			}
+		};
+		
+		$(document.body).click(hide);
+		box.find('a.x').click(hide);
+		
+		box.bind('close', hide)
+	})
+});

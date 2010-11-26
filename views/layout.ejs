@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>index</title> 
+	<meta name="author" content="Mario Scheliga">
+	<link href="/ui/styles.css" media="screen" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="/ui/js/lib/jquery.js"></script>
+    <script type="text/javascript" src="/ui/js/lib/jquery.cookie.js"></script> 
+	<script type="text/javascript" src="/ui/js/lib/jquery.ui.js"></script>
+    <script type="text/javascript" src="/ui/js/scripts.js"></script>
+</head>
+<body>
+<div class="wide">
+	<div id="head">
+		<div class="logo">UMCC by sourcegarden</div>
+		<ul class="mainnav">
+			<li class="feed selected">
+				<a href="/">Feed</a>
+			</li>
+			<li class="groups">
+				<a href="/threads">Threads</a><!-- > ALL ACTIVE THREADS <!-->
+			</li>
+			<li class="apps">
+				<a href="/user/apps">Apps</a>
+			</li>
+			<li class="groups">
+				<a href="/groups">Groups</a>
+			</li>
+			<li class="contacts">
+				<a href="/user/contacts">Contacts</a>
+			</li>
+			<li class="admin">
+				<a href="/admin">Admin</a>
+			</li>
+		</ul>
+	    <div class="usernav">
+			<p>
+				<%= user.name %>
+				<a href="/logout" class="logout">(Logout)</a>
+			</p>
+			<a class="editprofile" href="/user/profile/edit">
+				<span>Profile</span>
+			</a>
+			<a class="settings" href="/user/settings">
+				<span>Settings</span>
+			</a>
+			<a class="feedback" href="/app/feedback">
+				<span>Feedback</span>
+			</a>
+		</div>
+		<div class="search">
+			<input type="text" value="Search everything..." class="reset" />
+			<button />
+		</div>
+    </div> 
+    <%- message %> 
+    <%- body %>
+</div>
+</body>
+</html>

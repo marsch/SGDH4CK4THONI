@@ -1,0 +1,132 @@
+<div class="info editbox" rel="/admin/app/edit/<%- app.id %>">
+    <div class="ico">
+		<img src="/ui/ico/24/organizations.png" alt="" />
+	</div> 
+	<h1 class="editable" rel="name"><%- app.name %></h1>
+	<div class="tags"></div> 
+	<ul class="users openbox" rel="/organizations/userselector/4cdd9423b4664a0b27330000">
+		<li rel="4cdd5cd8b4664af8262d0000" title="Mario"><img src="/thumbs/users/na.jpg" alt="" /></li>
+	</ul>
+</div>
+
+<div class="inner main-box"> 
+	<div class="bar">
+		<ul class="tabs">
+			<li rel="#tab-general"><a>Info & feed</a></li>
+			<li rel="#tab-pipeline"><a>Pipeline</a></li>
+			<li rel="#tab-contacts"><a>Contacts</a></li>
+			<li rel="#tab-media"><a>Social media</a></li>
+		</ul> 
+		<a class="button only-ico delete openbox" rel="/admin/apps/delete/<%- app.id %>"><img src="/ui/ico/16/delete.png" alt="" /></a>
+	</div>
+	
+	<div id="tab-general" class="box tab editbox" rel="/organizations/edit/<%- app.id %>">
+        <div class="column">
+            <h2>Integration</h2>
+            <dl>
+	            <dt>ID</dt>
+	            <dd rel=""><%- app.id %></dd>
+                <dt>Secret</dt>
+				<dd rel=""><%- app.application_secret %></dd>
+            </dl> 
+        </div>
+		<div class="column">
+			<h2>Description</h2> 
+			<div class="description"><p><%- app.description %></p></div> 
+			<p class="options"><a class="edit edit-description">Edit text</a> ▪ <a class="edit edit-folder">Edit folder</a></p>
+		</div>
+		<div class="column">
+			<h2>Info</h2> 
+			<dl>
+				<dt>Phone</dt>
+				<dd rel="phone"><a href="callto://"></a></dd>
+                
+                <dt>Email</dt>
+				<dd rel="email" class=""></dd>
+        
+                <dt>Fax</dt>
+				<dd rel="fax" class=""></dd>
+
+                <dt>WWW</dt>
+				<dd rel="website" class=""></dd>
+
+                <dt>Twitter</dt>
+				<dd rel="twitter" class=""></dd>
+
+                <dt>Address</dt>
+				<dd rel="address" class="multiline"></dd>		
+	        </dl>
+		</div> 
+		<div class="clear"></div>
+		<hr /> 
+		<div class="feed" rel="_organization=4cdd9423b4664a0b27330000">
+			<form>
+				<h2>What's happening?</h2>
+				
+				<input type="hidden" name="type" value="note" class="type" />
+				<ul class="types">
+					<li rel="note" class="selected" title="Note"><a class="button"><img src="/ui/ico/16/note.png" alt="" /></a></li>
+					<li rel="task" title="Task"><a class="button"><img src="/ui/ico/16/task.png" alt="" /></a></li>
+					<li rel="calendar" title="Calendar item"><a class="button"><img src="/ui/ico/16/calendar.png" alt="" /></a></li>
+			    </ul> 
+				<textarea name="text"></textarea> 
+				<div class="extra task">
+					<input type="text" name="date" value="Set date" class="reset" disabled="1" />
+					<input type="text" name="assign" value="Assign to" class="reset suggestions" disabled="1" rel="/suggest/users" />
+				</div>
+				<div class="extra calendar">
+					<input type="text" name="date" value="Set date" class="reset" disabled="1" />
+				</div>
+				<div class="attach">Attach files</div>
+			    <button>Send</button>
+		    </form>		
+			<div class="messages"></div>
+		</div>
+	</div> 
+	<div id="tab-pipeline" class="box tab">
+		<h2>Pipeline</h2> 
+		<a class="button create openbox right" rel="/pipeline/create?organization=4cdd9423b4664a0b27330000">Add new sales</a> 
+		<table id="pipeline" class="list">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Value</th>
+					<th>Expected closing</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="status-won">
+					<td>
+						<p class="status status-won">Won</p>
+						<h4><a href="/pipeline/#id:4ced2167b4664a0027070200">JTI CRM</a></h4>
+					</td>
+					<td><span class="value">3500</span></td>
+					<td>10.10.2003</td>
+				</tr>
+			</tbody>
+		</table> 
+		<div class="clear"></div>
+	</div> 
+	<div id="tab-contacts" class="box tab">
+		<h2>Contacts</h2> 
+		<a class="button create openbox right" rel="/people/create?organization=4cdd9423b4664a0b27330000">Add new contact</a> 
+		<div id="contacts">
+			<h3>A</h3>
+			<div class="contact" rel="4cdd9423b4664a0b27340000">
+				<img src="/thumbs/users/na.jpg" alt="" class="openbox" rel="" />
+				<h4><a href="/people/#id:4cdd9423b4664a0b27340000">Andreas Peyerl</a></h4>
+				<p class="title"></p>
+				<div class="meta">
+					<p class="phone"></p>
+					<p class="email"><a href="mailto:"></a></p>
+				</div>
+		   </div>
+		</div> 
+		<div class="clear"></div>
+	</div>
+	
+	<div id="tab-media" class="box tab">
+		<h2>Twitter</h2>
+		<p>Add Twitter name first to organization info</p>
+	</div> 
+</div>
