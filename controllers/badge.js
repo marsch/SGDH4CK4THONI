@@ -31,6 +31,9 @@ function doEditBadge (req,res) {
                 case "time":
                     badge.time = isNaN(parseInt(req.body.value))? 0 : parseInt(req.body.value);
                     break;
+                case "depBadges":
+                    //TODO: implement
+                    break;
                 
             }
             badgeModel.updateBadge(badge, meta, function(err,data) {

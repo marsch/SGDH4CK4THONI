@@ -66,13 +66,25 @@
 	   </div>
 	   <div class="column">
 	     <h2>Depends on other badges</h2>
-	         <select name="depBadges" multiple="true" id="depBadges">
+	         <select name="depBadges" multiple="multiple" id="depBadges" rel="depBadges">
 	             <% for (i in badges) { %>
 	             <option value="<%- badges[i].id %>"><%- badges[i].name %></option>
 	             <% } %>
 	         </select>
 	         <script type="text/javascript">
-	             $("select").multiselect();
+	              $(function() {
+	                 console.log($("#depBadges"));
+	                 
+	               $("#depBadges").multiselect({
+	                   close:function() {
+	                     $.post($(this).parents('.editbox').attr('rel'),{
+	                         field: $(this).attr('rel'),
+	                         value: $(this).val()
+	                     });
+	                    // console.log($(this).parents('.editbox').attr('rel'));
+	                   }	               
+	               }).multiselectfilter();
+	              });
 	         </script>
 	   </div>
 	</div>
