@@ -5,6 +5,7 @@ var triggerModel = function() {
 }
 triggerModel.prototype =  {
     loadTriggers: function(whereObj,fn) { 
+        console.log(whereObj);
         db.getAll('triggers',{where:whereObj},function(err,apps) {
             fn(err,apps);
         });
