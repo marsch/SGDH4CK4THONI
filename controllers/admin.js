@@ -19,9 +19,9 @@ exports.init = function(app) {
     app.post("/admin/apps/delete/:id", restrict.toLoggedInUser, restrict.toPermission('add_applications'), doDeleteApp);
 }
 
-function showAdminPage(req,res,next) { 
-    res.render("admin/adminPage",{'locals':{'user':req.user}});
-} 
+function showAdminPage(req,res,next) {
+    res.render("admin/adminPage",{'locals':{'user':req.user,'badgeCounter':res}});
+}      
 
 function getAppList(req,res,next) {
     var apps={'results': [

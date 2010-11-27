@@ -12,7 +12,7 @@ userModel.prototype =  {
         });
 	},
 	loadUser: function (key,fn) {
-	    console.log("loading user:"+key);
+	    //console.log("loading user:"+key);
 	    db.get('users',key, {keys:true},function(err,user) {
 	        if(!err) { 
 	           user.key = key; //just a nifty one
