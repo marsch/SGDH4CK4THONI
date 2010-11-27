@@ -10,7 +10,8 @@ exports.init = function(app) {
 }
 
 function searchTrigger(req,res,next) {
-    triggerModel.loadTriggers({},function(err,data){
+    console.log(req.params.name);
+    triggerModel.loadTriggers({'name':req.params.name},function(err,data){
         var result = [];
         if(!err) {
             for(var i in data) {
