@@ -269,7 +269,7 @@ $(function() {
 		  alert("okay thread lookup");
 		}
 	});*/
-	$('#object').delegate('.tags', 'click', function(e) {
+/*	$('#object').delegate('.tags', 'click', function(e) {
 		if(!$(this).hasClass('edit')) {
 			var text = [];
 			$(this).find('a').each(function() {
@@ -395,5 +395,5 @@ $(function() {
 		};
 		
 		var input = textarea.find('textarea').val(text).focus().blur(update).keyup();
-	});
+	});*/
 });
