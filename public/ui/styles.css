@@ -2584,3 +2584,18 @@ div.growl {
 	-webkit-border-radius: 4px;
 	cursor: pointer;
 }
+
+div.feed #itemselect {
+	 background: #fff;
+	 position: absolute;
+	 margin: -10px 0 0 0px;
+	 width: 265px;
+	 min-height: 80px;
+	 border: 1px solid #ccc;
+	 -moz-border-radius: 6px;
+	 -webkit-border-radius: 6px;
+	 -moz-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.33);
+	 -webkit-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.33);
+
+	 z-index: 100;
+}

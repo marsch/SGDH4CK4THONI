@@ -195,4 +195,205 @@ $(function() {
 		
 		box.bind('close', hide)
 	})
+	 
+	 
+	 
+	function split( val ) {
+		return val.split( /\ \s*/ );
+	}
+	function extractLast( term ) {
+		return split( term ).pop();
+	}
+	try {
+    $('.feed form textarea').autocomplete({
+        source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"], appendTo: ".feed form" 
+    });
+	$('.ddfeed form textarea').autocomplete({
+		source: function( request, response ) {
+			$.getJSON( "search.php", {
+				term: extractLast( request.term )
+			}, response );
+		},
+		search: function() {
+			// custom minLength
+			var term = extractLast( this.value );
+			console.log("val:"+this.value);
+			console.log("term:"+term);
+			console.log("term???:"+term.substring(0,1));
+			if ( term.length < 2 || (term.substring(0,1) != "@" && term.substring(0,1) != "#")) {
+				return false;
+			}
+		},
+		focus: function() {
+			// prevent value inserted on focus
+			return false;
+		},
+		select: function( event, ui ) {
+			var terms = split( this.value );
+			// remove the current input
+			terms.pop();
+			// add the selected item
+			terms.push( ui.item.value );
+			// add placeholder to get the comma-and-space at the end
+			terms.push( "" );
+			this.value = terms.join( ", " );
+			return false;
+		}
+	});
+	} catch (e) {
+	   console.log(e);
+	}
+	        
+	            /*.live('keyup', function() {
+	    
+	    
+/*		var userlookupmatch = this.value.substr(0, this.selectionEnd).match(/@(.+)/); 
+		var threadlookup = this.value.substr(0, this.selectionEnd).match(/#(.+)/); 
+		$(this).next('ul').remove();
+		console.log(userlookupmatch);
+		if(userlookupmatch) { 
+		   // alert("okay letz look");
+			userlookupmatch = userlookupmatch[1].toLowerCase();
+			var ul = '';
+			
+			$.each(data.users, function(i, user) {
+				if(user.name.toLowerCase().indexOf(match) == 0) {
+					ul += '<li rel="'+user._id+'">'+user.name+'</li>';
+				}
+			});
+			
+			$(this).after('<ul>'+ul+'</ul>');
+		}
+		
+		if(threadlookup) {
+		  alert("okay thread lookup");
+		}
+	});*/
+	$('#object').delegate('.tags', 'click', function(e) {
+		if(!$(this).hasClass('edit')) {
+			var text = [];
+			$(this).find('a').each(function() {
+				text.push($(this).text());
+			});
+			text = text.join(', ');
+			
+			var self = $(this).addClass('edit');
+			
+			$(this).html('<input type="text" />');
+			
+			var update = function() {
+				var val = input.val()
+				var tags = val.split(', ');
+				
+				self.empty().removeClass('edit').hide().fadeIn();
+				
+				$.each(tags, function(i, v) {
+					self.append('<a>'+html(v)+'</a>');
+				});
+				
+				if(val != text) {
+					$.post(self.parents('.editbox').attr('rel'), {
+						field: 'tags',
+						value: val
+					});
+				}
+				
+				if(val == '') {
+					self.html('<p>'+loc('add_tags')+'</p>');
+				}
+			};
+			
+			var input = $(this).find('input').val(text).focus().blur(update);
+			
+			input.keypress(function(e) {
+				var code = (e.keyCode ? e.keyCode : e.which);
+				if(code == 13) update();
+			});
+		}
+	});
+	$('#object').delegate('dd', 'click', function(e) {
+		if(!$(this).hasClass('edit') && !$(e.target).is('a')) {
+			var text = $(this).text();
+			var self = $(this).addClass('edit');
+			
+			if($(this).hasClass('multiline'))
+				$(this).html('<textarea rows="'+(text.split("\n").length - 1)+'"></textarea>');
+			else
+				$(this).html('<input type="text" />');
+			
+			var update = function() {
+				var val = input.val();
+				self.html(htmlp(val)).removeClass('edit').hide().fadeIn();
+				
+				if(val != text) {
+					$.post(self.parents('.editbox').attr('rel'), {
+						field: self.attr('rel'),
+						value: val
+					});
+				}
+			};
+			
+			var input = $(this).find('input,textarea').val(text).focus().blur(update);
+			
+			if(!$(this).hasClass('multiline')) {
+				input.keypress(function(e) {
+					var code = (e.keyCode ? e.keyCode : e.which);
+					if(code == 13) update();
+				});
+			}
+		}
+	});
+	
+	$('#object').delegate('.editable', 'click', function(e) {
+		if(!$(this).hasClass('edit') && !$(e.target).is('a')) {
+			var text = $(this).text();
+			var self = $(this).addClass('edit');
+			
+			$(this).html('<input type="text" />');
+			
+			var update = function() {
+				var val = input.val();
+				self.html(htmlp(val)).removeClass('edit').hide().fadeIn();
+				
+				if(val != text) {
+					$.post(self.parents('.editbox').attr('rel'), {
+						field: self.attr('rel'),
+						value: val
+					});
+				}
+			};
+			
+			var input = $(this).find('input,textarea').val(text).focus().blur(update);
+			
+			if(!$(this).hasClass('multiline')) {
+				input.keypress(function(e) {
+					var code = (e.keyCode ? e.keyCode : e.which);
+					if(code == 13) update();
+				});
+			}
+		}
+	});
+	
+	$('#object').delegate('.edit-description', 'click', function(e) {
+		var textarea = $(this).parent().prev();
+		
+		var text = textarea.text();
+		var self = textarea.addClass('edit');
+		
+		textarea.html('<textarea class="autoresize"></textarea>');
+		
+		var update = function() {
+			var val = input.val();
+			self.html(htmlp(val)).removeClass('edit').hide().fadeIn();
+			
+			if(val != text) {
+				$.post(self.parents('.editbox').attr('rel'), {
+					field: 'description',
+					value: val
+				});
+			}
+		};
+		
+		var input = textarea.find('textarea').val(text).focus().blur(update).keyup();
+	});
 });
