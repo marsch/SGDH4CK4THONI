@@ -31,6 +31,10 @@ $(function() {
             '/admin/apps': function (row) { 
                 var ret = '<tr id="row-'+row.id+'" rel="'+row.id+'"><td><h4>'+row.name+'</h4></td></tr>';
                 return ret;
+            },
+            '/admin/trigger/search': function (row) { 
+                var ret = '<tr id="row-'+row.id+'" rel="'+row.id+'"><td><h4>'+row.name+'</h4></td></tr>';
+                return ret;
             }
         },
         update: function(options) {
