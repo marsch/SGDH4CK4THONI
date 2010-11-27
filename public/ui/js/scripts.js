@@ -215,15 +215,20 @@ $(function() {
 	function extractLast( term ) {
 		return split( term ).pop();
 	}
-	try {
-    $('.feed form textarea').autocomplete({
-        source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"], appendTo: ".feed form" 
-    });
-	$('.ddfeed form textarea').autocomplete({
+ 
+	$('.feed form textarea').autocomplete({
 		source: function( request, response ) {
-			$.getJSON( "search.php", {
+		    if(extractLast(request.term).substring(0,1) == "@") {
+		      response ([{ 'label':'user1', 'data': {'id':'IDOIJSDOIJF','name':'hello'} }]);
+		    }
+		    else if (extractLast(request.term).substring(0,1) == "#") {
+		      response ([{ 'label':'trigger1', 'data': {'id':'asjkljklasjklas','name':'ZU SPät'} }]);
+		    }
+		    console.log(response);
+		    return response;
+			/*$.getJSON( "/feed/mentions/search", {
 				term: extractLast( request.term )
-			}, response );
+			}, response );*/
 		},
 		search: function() {
 			// custom minLength
@@ -241,19 +246,20 @@ $(function() {
 		},
 		select: function( event, ui ) {
 			var terms = split( this.value );
+			var users = $(this).parent().children('input[name="users"]').val().split(',').push(ui.item.data.id).join(',');
+			
 			// remove the current input
 			terms.pop();
 			// add the selected item
-			terms.push( ui.item.value );
+			
+			console.log(users);
+			terms.push( ui.item.label+"("+ui.item.data.id+")" );
 			// add placeholder to get the comma-and-space at the end
 			terms.push( "" );
-			this.value = terms.join( ", " );
+			this.value = terms.join( " " );
 			return false;
 		}
-	});
-	} catch (e) {
-	   console.log(e);
-	}
+	}); 
 	        
 /*	            .live('keyup', function() {
 	    
@@ -408,5 +414,19 @@ $(function() {
 		};
 		
 		var input = textarea.find('textarea').val(text).focus().blur(update).keyup();
-	});
+
+/*function htmlp(string) {
+    string = string.replace(/((https?)\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]!\?])/g, function(url) {
+      return '<a href="'+url+'">'+url+'</a>';
+    });
+	
+	string = string.replace(/((?:\S+)@(?:\S+))([.,?!)]?(\s|$))/g, '<a href="mailto:$1">$1</a>$2');
+	string = '<p>'+string.replace(/\n/g, '<br />').replace(/(\<br \/\>\s*){2,}/g, '</p><p>')+'</p>';
+	
+	return string;
+}*/
+
+    });
 });
+
+
