@@ -275,32 +275,7 @@ $(function() {
 			return false;
 		}
 	}); 
-	        
-/*	            .live('keyup', function() {
-	    
-	    
-		var userlookupmatch = this.value.substr(0, this.selectionEnd).match(/@(.+)/); 
-		var threadlookup = this.value.substr(0, this.selectionEnd).match(/#(.+)/); 
-		$(this).next('ul').remove();
-		console.log(userlookupmatch);
-		if(userlookupmatch) { 
-		   // alert("okay letz look");
-			userlookupmatch = userlookupmatch[1].toLowerCase();
-			var ul = '';
-			
-			$.each(data.users, function(i, user) {
-				if(user.name.toLowerCase().indexOf(match) == 0) {
-					ul += '<li rel="'+user._id+'">'+user.name+'</li>';
-				}
-			});
-			
-			$(this).after('<ul>'+ul+'</ul>');
-		}
-		
-		if(threadlookup) {
-		  alert("okay thread lookup");
-		}
-	}); */
+
 	$('#object').delegate('.tags', 'click', function(e) {
 		if(!$(this).hasClass('edit')) {
 			var text = [];
@@ -429,6 +404,85 @@ $(function() {
 		};
 		
 		var input = textarea.find('textarea').val(text).focus().blur(update).keyup();
+	}); 
+
+    var feed, messages, rel_type;
+	var feed_i = 0;
+	
+	var loadFeed = function(last_i) {
+		if(last_i) feed_i += last_i;
+		else feed_i = 0;
+		
+		feed = $('#feed');
+		console.log(feed);
+		if(feed.length == 0) return(false);
+		
+		messages = feed.find('.messages');
+		rel_type = feed.attr('rel').split('=')[0];
+		
+		var url = '/feed?'+feed.attr('rel');
+		if(feed_i) url += '&offset='+feed_i;
+		
+		$.getJSON(url, function(json) {
+			/*messages.empty();*/
+			console.log(json);
+			$.each(json, appendFeed);
+			
+			messages.children('div').fadeIn();
+			
+			if(json.length > 50) {
+				messages.append('<a class="more">'+loc('more')+'</a>');
+			}
+			
+			if(feed.attr('rel') == '' && json.length == 0) {
+				messages.html(loc('feed_empty')).children().fadeIn();
+			}
+		});
+	}
+	
+	var appendFeed = function(i, json, live) {
+		if(i >= 50) return(false);
+		console.log(json);
+		if(document.getElementById('message-'+json.id)) return(false);
+		
+		var classes = ['message'];
+		
+		if(live && !focused)
+			classes.push('unread');
+		if(json.type == 'task' && json.data && json.data.done)
+			classes.push('done');
+		
+		var ret = '<div id="message-'+json.id+'" class="'+classes.join(' ')+'" rel="'+json.uid+'">'+(json.from)+": "+json.text+'<span class="reldate" rel="'+json.updated+'">'+reldate(json.updated)+'</span><span class="rels">';
+ 
+		
+		var actions = []; 
+		if(json.type == "user_trigger")
+			actions.push('<a class="confirm">'+('confirm')+'</a>');
+		
+		
+		ret += '<p class="actions">'+actions.join(' â€¢ ')+'</p>';
+		
+		if(json.replies) {
+			ret += '<div class="replies">';
+			$.each(json.replies, function(e, json) {
+				ret += '<div>'+(json.name)+'<span class="reldate" rel="'+json.updated+'">'+reldate(json.updated)+'</span>'+htmlp(json.text)+'</div>';
+			});
+		}
+		else {
+			ret += '<div class="replies" style="display: none;">';
+		}
+		
+		ret += '<textarea></textarea></div></div>';
+		
+		if(!live)
+			messages.append(ret);
+		else
+			return ret;
+	}
+	
+	loadFeed();
+	
+});
 
 function htmlp(string) {
     string = string.replace(/((https?)\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]!\?])/g, function(url) {
@@ -439,9 +493,37 @@ function htmlp(string) {
 	string = '<p>'+string.replace(/\n/g, '<br />').replace(/(\<br \/\>\s*){2,}/g, '</p><p>')+'</p>';
 	
 	return string;
-}*/
+}
+function removeEmptyElements (arr) {
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] == "") {         
+      arr.splice(i, 1);
+      i--;
+    }
+  }
+  return arr;
+};
+function reldate(ts) {
+    ts = Math.round(ts/1000);
+    var now = Math.round(new Date().getTime()/1000);
+	var dif = now-ts;
+	
+	if(dif < 0) dif = 0;
+	
+	if(dif < 60)
+		var d = Math.floor(dif)+' '+loc('sec_ago');
+	else if(dif < 3600)
+		var d = Math.floor(dif/60)+' '+loc('min_ago');
+	else if(dif < 86400)
+		var d = Math.floor(dif/3600)+' '+loc('hours_ago');
+	else
+		var d = Math.floor(dif/86400)+' '+loc('days_ago');
+	
+	return d;
+}
+function loc(key) {
+    return key;
+} 
 
-    });
-});
 
 
