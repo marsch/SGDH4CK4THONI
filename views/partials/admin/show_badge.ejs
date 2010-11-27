@@ -1,0 +1,104 @@
+<div class="info editbox" rel="/admin/app/edit/<%- badge.id %>">
+    <div class="ico">
+    	<img src="/ui/ico/24/organizations.png" alt="" />
+	</div> 
+	<h1 class="editable" rel="name"><%- badge.name %></h1>
+	<!-- <div class="tags"></div> 
+	 <ul class="users openbox" rel="/organizations/userselector/4cdd9423b4664a0b27330000">
+		<li rel="4cdd5cd8b4664af8262d0000" title="Mario"><img src="/thumbs/users/na.jpg" alt="" /></li>
+	</ul> -->
+</div>
+
+<div class="inner main-box"> 
+	<div class="bar">
+		<ul class="tabs">
+			<li rel="#tab-general"><a>General info</a></li>
+			<li rel="#tab-dependencies"><a>Dependencies</a></li>
+			<!-- <li rel="#tab-contacts"><a>Contacts</a></li>
+			<li rel="#tab-media"><a>Social media</a></li> -->
+		</ul> 
+		<a class="button only-ico delete openbox" rel="/admin/badges/delete/<%- badge.id %>"><img src="/ui/ico/16/delete.png" alt="" /></a>
+	</div>
+	
+	<div id="tab-general" class="box tab editbox" rel="/admin/badges/edit/<%- badge.id %>">
+        <div class="column">
+            <h2>Basic Information</h2>
+            <dl>
+	            <dt>ID</dt>
+	            <dd rel="id" class="edit"><%- badge.id %></dd>
+	            <dt>Name</dt>
+	            <dd rel="name"><%- badge.name %></dd>
+                <dt>Description</dt>
+				<dd rel="description"><%- badge.description %></dd>
+            </dl> 
+        </div>
+        <div class="column">
+            <h2>Archviement</h2> 
+			<dl>
+			 <dt>XP</dt>
+			 <dd rel="xp"><%- badge.XP %></dd>
+		    <dl>
+		</div>
+		<!-- <div class="column">
+			<h2>Archviement</h2> 
+			<div class="description"><p><%- badge.description %></p></div> 
+			<p class="options"><a class="edit edit-description">Edit text</a> ▪ <a class="edit edit-folder">Edit folder</a></p>
+		</div> -->
+		<div class="clear"></div>
+		<hr />
+	</div>
+	<div id="tab-dependencies" class="box tab editbox" rel="/admin/badges/edit/<%- badge.id %>">
+	   <h2>Dependencies</h2>
+	   <dl>
+	       <dt>Maximal user experience</dt>
+	       <dd rel="maxUserXP"><%- badge.maxUserXP %></dd>
+	       
+	   </dl>
+	</div>
+	<!-- <div id="tab-pipeline" class="box tab">
+		<h2>Pipeline</h2> 
+		<a class="button create openbox right" rel="/pipeline/create?organization=4cdd9423b4664a0b27330000">Add new sales</a> 
+		<table id="pipeline" class="list">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Value</th>
+					<th>Expected closing</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="status-won">
+					<td>
+						<p class="status status-won">Won</p>
+						<h4><a href="/pipeline/#id:4ced2167b4664a0027070200">JTI CRM</a></h4>
+					</td>
+					<td><span class="value">3500</span></td>
+					<td>10.10.2003</td>
+				</tr>
+			</tbody>
+		</table> 
+		<div class="clear"></div>
+	</div> 
+	<div id="tab-contacts" class="box tab">
+		<h2>Contacts</h2> 
+		<a class="button create openbox right" rel="/people/create?organization=4cdd9423b4664a0b27330000">Add new contact</a> 
+		<div id="contacts">
+			<h3>A</h3>
+			<div class="contact" rel="4cdd9423b4664a0b27340000">
+				<img src="/thumbs/users/na.jpg" alt="" class="openbox" rel="" />
+				<h4><a href="/people/#id:4cdd9423b4664a0b27340000">Andreas Peyerl</a></h4>
+				<p class="title"></p>
+				<div class="meta">
+					<p class="phone"></p>
+					<p class="email"><a href="mailto:"></a></p>
+				</div>
+		   </div>
+		</div> 
+		<div class="clear"></div>
+	</div>
+	
+	<div id="tab-media" class="box tab">
+		<h2>Twitter</h2>
+		<p>Add Twitter name first to organization info</p>
+	</div>  -->
+</div>

@@ -1,0 +1,33 @@
+<div class="info editbox" rel="/admin/app/edit/<%- trigger.id %>">
+    <div class="ico">
+    	<img src="/ui/ico/24/organizations.png" alt="" />
+	</div> 
+	<h1 class="editable" rel="name"><%- trigger.name %></h1>
+	<div class="tags"></div> 
+	<ul class="users openbox" rel="/organizations/userselector/4cdd9423b4664a0b27330000">
+		<li rel="4cdd5cd8b4664af8262d0000" title="Mario"><img src="/thumbs/users/na.jpg" alt="" /></li>
+	</ul>
+</div>
+
+<div class="inner main-box"> 
+	<div class="bar">
+		<ul class="tabs">
+			<li rel="#tab-general"><a>Info</a></li>
+		</ul> 
+		<a class="button only-ico delete openbox" rel="/admin/trigger/delete/<%- trigger.id %>"><img src="/ui/ico/16/delete.png" alt="" /></a>
+	</div>
+	
+	<div id="tab-general" class="box tab editbox" rel="/organizations/edit/<%- trigger.id %>">
+        <div class="column">
+            <h2>Trigger Info</h2>
+            <dl>
+	            <dt>ID</dt>
+	            <dd rel=""><%- trigger.id %></dd>
+                <dt>Description</dt>
+				<dd rel=""><%- trigger.description %></dd>
+				<dt>EXP</dt>
+				<dd rel=""><%- trigger.xp %></dd>
+            </dl> 
+        </div>
+     </div>
+</div>
