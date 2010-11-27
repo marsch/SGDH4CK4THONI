@@ -10,7 +10,13 @@ exports.init = function(app) {
 }
 
 function searchTrigger(req,res,next) {
-    triggerModel.loadTriggers({},function(err,data){
+    console.log(req.query.keyword);
+    if (req.query.keyword != '') {
+        where = { 'name' : req.query.keyword };
+    } else {
+        where = {};
+    }
+    triggerModel.loadTriggers(where,function(err,data){
         var result = [];
         if(!err) {
             for(var i in data) {
@@ -43,7 +49,7 @@ function doCreateTrigger(req, res, next) {
 	    var myTrigger = {};
 	    myTrigger.name = req.body.name;
 	    myTrigger.description = req.body.description;
-	    myTrigger.experience = req.body.experience;
+	    myTrigger.xp = req.body.experience;
 	
 	    myTrigger.id = Math.uuid();
 	
