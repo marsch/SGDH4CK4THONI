@@ -1,0 +1,37 @@
+<h2>Add new trigger</h2>
+
+<form id="new_trigger" action="admin/trigger/create" method="post" class="ajax">
+    <fieldset>
+    	<div class="field">
+			<label>Name</label>
+			<input type="text" name="name" value="" class="big required" />
+		</div> 
+		<div class="field">
+		    <label>Description</label>
+			<textarea class="big required" name="description" class="reset"></textarea>
+		</div>
+		<div class="field">
+		    <label>Experience</label>
+			<input type="text" name="experience" value="" class="big required" />
+		</div>
+	</fieldset>
+	<input type="submit" name="save" value="Save" />
+</form>
+
+<script type="text/javascript">
+$('#new_trigger').validate({
+    rules: {
+        experience: {
+            required : true,
+            number : true
+        }
+    }
+});
+
+$('.openbox form').bind('complete', function(e, response) {
+	$('div.openbox').trigger('close');
+	
+	Browser.update(true);
+	ObjectPane.load(section+'/show/'+response._id);
+});
+</script>
