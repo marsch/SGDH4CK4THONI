@@ -117,6 +117,7 @@ function getCreateUser(req,res,next) {
 }
 function doCreateUser(req,res,next) {
     // check if new username is already used in database
+    console.log(req.body.name);
     var users = userModel.loadUsers({'name':req.body.name}, function(err, users) {
         if (users) {
             req.session.error = 'Sorry, this username is already in use';
