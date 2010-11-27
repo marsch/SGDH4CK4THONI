@@ -6,7 +6,7 @@ var appModel = function() {
     
 }
 appModel.prototype =  {
-    loadApps: function(whereObj,fn) { 
+    loadApps: function(whereObj,fn) {  
         db.getAll('apps',{where:whereObj},function(err,apps) {
             fn(err,apps);
         });
