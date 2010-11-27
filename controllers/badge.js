@@ -28,6 +28,9 @@ function doEditBadge (req,res) {
                 case "description":
                     badge.description = req.body.value;
                     break;
+                case "time":
+                    badge.time = isNaN(parseInt(req.body.value))? 0 : parseInt(req.body.value);
+                    break;
                 
             }
             badgeModel.updateBadge(badge, meta, function(err,data) {
@@ -72,9 +75,21 @@ function doCreateBadge (req, res) {
 };
 
 function getShowBadge (req, res) {
-    badgeModel.getBadge(req.params.id, function(err,data) {
+    badgeModel.getAllBadges({}, function(err,data) {
 	   if(!err) {
-	       res.render("partials/admin/show_badge",{'locals':{'user':req.user,'badge':data},'layout':false});
+	       console.log("before");
+	       var badges = [];
+	       var badge = {};
+	       console.log(req.params.id);
+	       for (var i in data) {
+	           if (data[i].data.id == req.params.id)
+	               badge = data[i].data;
+	           else
+	               badges.push(data[i].data);
+	       }
+	       console.log(badge);
+	       console.log(badges);
+	       res.render("partials/admin/show_badge",{'locals':{'user':req.user,'badge':badge,'badges':badges},'layout':false});
 	   }
     });
        

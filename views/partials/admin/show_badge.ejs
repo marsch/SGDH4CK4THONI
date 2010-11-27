@@ -39,6 +39,7 @@
 			 <dd rel="xp"><%- badge.XP %></dd>
 		    <dl>
 		</div>
+		
 		<!-- <div class="column">
 			<h2>Archviement</h2> 
 			<div class="description"><p><%- badge.description %></p></div> 
@@ -48,12 +49,32 @@
 		<hr />
 	</div>
 	<div id="tab-dependencies" class="box tab editbox" rel="/admin/badges/edit/<%- badge.id %>">
-	   <h2>Dependencies</h2>
-	   <dl>
-	       <dt>Maximal user experience</dt>
-	       <dd rel="maxUserXP"><%- badge.maxUserXP %></dd>
-	       
-	   </dl>
+	   <div class="column">
+		   <h2>Dependencies</h2>
+		   <dl>
+		       <dt>Maximal user experience</dt>
+		       <dd rel="maxUserXP"><%- badge.maxUserXP %></dd>
+		       
+		   </dl>
+	   </div>
+	   <div class="column">
+	       <h2>Time</h2>
+	       <dl>
+	           <dt>Time</dt>
+	           <dd rel="time"><%- badge.time %></dd>
+	       </dl>
+	   </div>
+	   <div class="column">
+	     <h2>Depends on other badges</h2>
+	         <select name="depBadges" multiple="true" id="depBadges">
+	             <% for (i in badges) { %>
+	             <option value="<%- badges[i].id %>"><%- badges[i].name %></option>
+	             <% } %>
+	         </select>
+	         <script type="text/javascript">
+	             $("select").multiselect();
+	         </script>
+	   </div>
 	</div>
 	<!-- <div id="tab-pipeline" class="box tab">
 		<h2>Pipeline</h2> 

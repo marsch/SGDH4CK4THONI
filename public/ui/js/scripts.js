@@ -35,10 +35,6 @@ $(function() {
             '/admin/badges':function (row) {
                var ret = '<tr id="row-'+row.id+'" rel="'+row.id+'"><td><h4>'+row.name+'</h4></td></tr>';
                 return ret;
-                
-            }, '/admin/trigger': function (row) { 
-                var ret = '<tr id="row-'+row.id+'" rel="'+row.id+'"><td><h4>'+row.name+'</h4></td></tr>';
-                return ret;
             }, '/admin/trigger': function (row) { 
                 var ret = '<tr id="row-'+row.id+'" rel="'+row.id+'"><td><h4>'+row.name+'</h4></td></tr>';
                 return ret;
@@ -216,7 +212,7 @@ $(function() {
 		return split( term ).pop();
 	}
  
-	$('.feed form textarea').autocomplete({
+	/*$('.feed form textarea').autocomplete({
 		source: function( request, response ) {
 		    if(extractLast(request.term).substring(0,1) == "@") {
 		      response ([{ 'label':'user1', 'data': {'id':'IDOIJSDOIJF','name':'hello'} }]);
@@ -226,9 +222,9 @@ $(function() {
 		    }
 		    console.log(response);
 		    return response;
-			/*$.getJSON( "/feed/mentions/search", {
-				term: extractLast( request.term )
-			}, response );*/
+			//$.getJSON( "/feed/mentions/search", {
+			//	term: extractLast( request.term )
+			//}, response );
 		},
 		search: function() {
 			// custom minLength
@@ -259,7 +255,7 @@ $(function() {
 			this.value = terms.join( " " );
 			return false;
 		}
-	}); 
+	}); */
 	        
 /*	            .live('keyup', function() {
 	    
@@ -329,9 +325,10 @@ $(function() {
 		}
 	});
 	$('#object').delegate('dd', 'click', function(e) {
-	    /*console.log(this);
-	    console.log($(this)); */
+	    console.log(this);
+	    console.log($(this));
 		if(!$(this).hasClass('edit') && !$(e.target).is('a')) {
+		    console.log("inner");
 			var text = $(this).text();
 			var self = $(this).addClass('edit');
 			
