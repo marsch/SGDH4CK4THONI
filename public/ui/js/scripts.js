@@ -251,10 +251,10 @@ $(function() {
 	   console.log(e);
 	}
 	        
-	            /*.live('keyup', function() {
+/*	            .live('keyup', function() {
 	    
 	    
-/*		var userlookupmatch = this.value.substr(0, this.selectionEnd).match(/@(.+)/); 
+		var userlookupmatch = this.value.substr(0, this.selectionEnd).match(/@(.+)/); 
 		var threadlookup = this.value.substr(0, this.selectionEnd).match(/#(.+)/); 
 		$(this).next('ul').remove();
 		console.log(userlookupmatch);
@@ -275,8 +275,8 @@ $(function() {
 		if(threadlookup) {
 		  alert("okay thread lookup");
 		}
-	});*/
-/*	$('#object').delegate('.tags', 'click', function(e) {
+	}); */
+	$('#object').delegate('.tags', 'click', function(e) {
 		if(!$(this).hasClass('edit')) {
 			var text = [];
 			$(this).find('a').each(function() {
@@ -319,6 +319,8 @@ $(function() {
 		}
 	});
 	$('#object').delegate('dd', 'click', function(e) {
+	    /*console.log(this);
+	    console.log($(this)); */
 		if(!$(this).hasClass('edit') && !$(e.target).is('a')) {
 			var text = $(this).text();
 			var self = $(this).addClass('edit');
@@ -330,7 +332,7 @@ $(function() {
 			
 			var update = function() {
 				var val = input.val();
-				self.html(htmlp(val)).removeClass('edit').hide().fadeIn();
+				self.html(val).removeClass('edit').hide().fadeIn();
 				
 				if(val != text) {
 					$.post(self.parents('.editbox').attr('rel'), {
@@ -360,7 +362,7 @@ $(function() {
 			
 			var update = function() {
 				var val = input.val();
-				self.html(htmlp(val)).removeClass('edit').hide().fadeIn();
+				self.html(val).removeClass('edit').hide().fadeIn();
 				
 				if(val != text) {
 					$.post(self.parents('.editbox').attr('rel'), {
@@ -391,7 +393,7 @@ $(function() {
 		
 		var update = function() {
 			var val = input.val();
-			self.html(htmlp(val)).removeClass('edit').hide().fadeIn();
+			self.html(val).removeClass('edit').hide().fadeIn();
 			
 			if(val != text) {
 				$.post(self.parents('.editbox').attr('rel'), {
@@ -402,5 +404,5 @@ $(function() {
 		};
 		
 		var input = textarea.find('textarea').val(text).focus().blur(update).keyup();
-	});*/
+	});
 });

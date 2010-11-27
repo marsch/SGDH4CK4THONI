@@ -9,7 +9,33 @@ exports.init = function(app) {
     app.get("/admin/badges/show/:id",restrict.toLoggedInUser,restrict.toPermission('add_applications'), getShowBadge);
     app.get("/admin/badges/delete/:id",restrict.toLoggedInUser,restrict.toPermission('add_applications'), getDeleteBadge);
     app.post("/admin/badges/delete/:id",restrict.toLoggedInUser,restrict.toPermission('add_applications'), doDeleteBadge);
+    app.post("/admin/badges/edit/:id",restrict.toLoggedInUser,restrict.toPermission('add_applications'), doEditBadge);
 };
+
+function doEditBadge (req,res) {
+    badgeModel.getBadge(req.params.id,function(err,badge,meta) {
+        if (err) {
+            res.send({"success":false});
+        }
+        else {
+            switch (req.body.field) {
+                case "xp":
+                    badge.xp =  isNaN(parseInt(req.body.value))? 0 : parseInt(req.body.value);
+                    break;
+                case "name":
+                    badge.name = req.body.value;
+                    break;
+                case "description":
+                    badge.description = req.body.value;
+                    break;
+                
+            }
+            badgeModel.updateBadge(badge, meta, function(err,data) {
+		      res.send({"success":true});
+            });
+        }
+    });   
+}
 
 function doDeleteBadge (req, res) {
     badgeModel.deleteBadge(req.params.id, function(err,data) { 
@@ -26,7 +52,7 @@ function doCreateBadge (req, res) {
         id : Math.uuid(),
         name : req.body.name,
         description : req.body.description,
-        XP : isNaN(parseInt(req.body.XP))? 0 : parseInt(req.body.XP),
+        xp : isNaN(parseInt(req.body.xp))? 0 : parseInt(req.body.xp),
         depBadges:[],
         trigger:[],
         time:0,
@@ -46,7 +72,7 @@ function doCreateBadge (req, res) {
 };
 
 function getShowBadge (req, res) {
-    badgeModel.loadBadge(req.params.id, function(err,data) {
+    badgeModel.getBadge(req.params.id, function(err,data) {
 	   if(!err) {
 	       res.render("partials/admin/show_badge",{'locals':{'user':req.user,'badge':data},'layout':false});
 	   }

@@ -4,9 +4,9 @@ var badgeModel = function() {
 };
 
 badgeModel.prototype = {
-      loadBadge : function(key,fn) {
-        db.get('badges',key,{keys:true},function(err,badge) {
-            fn(err,badge);
+      getBadge : function(key,fn) {
+        db.get('badges',key,{keys:true},function(err,badge,meta) {
+            fn(err,badge,meta);
         });
       },
       createBadge : function(badge,fn) {
@@ -35,6 +35,11 @@ badgeModel.prototype = {
               else
                 fn(res);
           });
+      },
+      updateBadge : function(badge,meta,fn) {
+          db.save('badges',badge.id,badge,meta,function(err,res) {
+              fn(err,res);
+          }); 
       }
 };
 

@@ -13,31 +13,32 @@
 	<div class="bar">
 		<ul class="tabs">
 			<li rel="#tab-general"><a>General info</a></li>
-			<li rel="#tab-pipeline"><a>Dependencies</a></li>
+			<li rel="#tab-dependencies"><a>Dependencies</a></li>
 			<!-- <li rel="#tab-contacts"><a>Contacts</a></li>
 			<li rel="#tab-media"><a>Social media</a></li> -->
 		</ul> 
 		<a class="button only-ico delete openbox" rel="/admin/badges/delete/<%- badge.id %>"><img src="/ui/ico/16/delete.png" alt="" /></a>
 	</div>
 	
-	<div id="tab-general" class="box tab editbox" rel="/organizations/edit/<%- badge.id %>">
+	<div id="tab-general" class="box tab editbox" rel="/admin/badges/edit/<%- badge.id %>">
         <div class="column">
             <h2>Basic Information</h2>
             <dl>
 	            <dt>ID</dt>
-	            <dd rel=""><%- badge.id %></dd>
+	            <dd rel="id" class="edit"><%- badge.id %></dd>
 	            <dt>Name</dt>
-	            <dd rel=""><%- badge.name %></dd>
+	            <dd rel="name"><%- badge.name %></dd>
                 <dt>Description</dt>
-				<dd rel=""><%- badge.description %></dd>
+				<dd rel="description"><%- badge.description %></dd>
             </dl> 
         </div>
         <div class="column">
             <h2>Archviement</h2> 
 			<dl>
 			 <dt>XP</dt>
-			 <dd rel=""><%- badge.XP %></dd>
+			 <dd rel="xp"><%- badge.XP %></dd>
 		    <dl>
+		</div>
 		<!-- <div class="column">
 			<h2>Archviement</h2> 
 			<div class="description"><p><%- badge.description %></p></div> 
@@ -46,8 +47,13 @@
 		<div class="clear"></div>
 		<hr />
 	</div>
-	<div id="tab-dependencies" class="box tab">
+	<div id="tab-dependencies" class="box tab editbox" rel="/admin/badges/edit/<%- badge.id %>">
 	   <h2>Dependencies</h2>
+	   <dl>
+	       <dt>Maximal user experience</dt>
+	       <dd rel="maxUserXP"><%- badge.maxUserXP %></dd>
+	       
+	   </dl>
 	</div>
 	<!-- <div id="tab-pipeline" class="box tab">
 		<h2>Pipeline</h2> 
