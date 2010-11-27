@@ -10,7 +10,7 @@ exports.init = function(app) {
 }
 
 function searchTrigger(req,res,next) {
-    console.log(req.query.keyword);
+    
     if (req.query.keyword != '') {
         where = { 'name' : req.query.keyword };
     } else {

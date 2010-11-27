@@ -5,7 +5,7 @@ exports.init = function(app) {
 function home(req,res,next) {
     console.log("HOME");
     if(req.session.user_id) {
-          res.redirect('/feed');
+          res.redirect('/feedPage');
     }
     else
     {

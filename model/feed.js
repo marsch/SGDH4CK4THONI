@@ -6,7 +6,7 @@ var feedModel = function() {
     
 }
 feedModel.prototype =  {
-    loadApps: function(whereObj,fn) {  
+    loadPosts: function(whereObj,fn) {  
         db.getAll('feed',{where:whereObj},function(err,myposts) {
             fn(err,myposts);
         });
