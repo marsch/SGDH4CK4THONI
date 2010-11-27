@@ -32,6 +32,7 @@ $(function() {
                 var ret = '<tr id="row-'+row.id+'" rel="'+row.id+'"><td><h4>'+row.name+'</h4></td></tr>';
                 return ret;
             },
+<<<<<<< HEAD:public/ui/js/scripts.js
             '/admin/badges':function (row) {
                var ret = '<tr id="row-'+row.id+'" rel="'+row.id+'"><td><h4>'+row.name+'</h4></td></tr>';
                 return ret;
@@ -40,6 +41,9 @@ $(function() {
                 var ret = '<tr id="row-'+row.id+'" rel="'+row.id+'"><td><h4>'+row.name+'</h4></td></tr>';
                 return ret;
             }, '/admin/trigger': function (row) { 
+=======
+            '/admin/trigger/search': function (row) { 
+>>>>>>> trigger:public/ui/js/scripts.js
                 var ret = '<tr id="row-'+row.id+'" rel="'+row.id+'"><td><h4>'+row.name+'</h4></td></tr>';
                 return ret;
             }
